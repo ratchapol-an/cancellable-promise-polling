@@ -30,18 +30,21 @@ const startPolling = <RS, RJ>(taskFn: () => Promise<RS>, options: PollingOptions
 			if (options.cancellationToken && options.cancellationToken.isCancellationRequested) {
 				reject('cancelled');
 				debug(`(${options.name}) is cancelled.`);
+				return;
 			}
 
 			const retry = () => {
 				if (!--retriesRemaining) {
 					debug(`(${options.name}) shouldContinue returned true. but maximum retries reached. Rejecting.`);
 					reject('maximum retries reached');
-				}
-				debug(`(${options.name}) shouldContinue returned true. Retrying (${retriesRemaining} remaining).`);
-				const nextInterval = options.strategy!.getNextInterval(options.retries! - retriesRemaining);
-				debug(`(${options.name}) Waiting ${nextInterval}ms to try again.`);
+					return;
+				} else {
+					debug(`(${options.name}) shouldContinue returned true. Retrying (${retriesRemaining} remaining).`);
+					const nextInterval = options.strategy!.getNextInterval(options.retries! - retriesRemaining);
+					debug(`(${options.name}) Waiting ${nextInterval}ms to try again.`);
 
-				setTimeout(poll, nextInterval);
+					setTimeout(poll, nextInterval);
+				}
 			};
 
 			try {
@@ -50,13 +53,16 @@ const startPolling = <RS, RJ>(taskFn: () => Promise<RS>, options: PollingOptions
 					retry();
 				} else {
 					resolve(value);
+					return;
 				}
 			} catch (error) {
 				debug(`(${options.name}) Poll failed.`);
 				if (options.shouldContinue!(undefined, error)) {
 					retry();
+					return;
 				} else {
 					reject(error);
+					return;
 				}
 			}
 		};

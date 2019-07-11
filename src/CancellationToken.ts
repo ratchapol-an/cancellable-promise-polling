@@ -1,8 +1,13 @@
 export default class CancellationToken {
-	constructor(public isCancellationRequested = false, public abortController = new AbortController()) {}
+	private cancellationRequested = false;
+	constructor(public abortController = new AbortController()) { }
 
 	public cancel() {
-		this.isCancellationRequested = true;
+		this.cancellationRequested = true;
 		this.abortController.abort();
+	}
+
+	public get isCancellationRequested(): boolean {
+		return this.cancellationRequested;
 	}
 }

@@ -1,5 +1,6 @@
-import { setDebugMode, startPolling } from '../index';
+import { CancellationToken, setDebugMode, startPolling } from '../index';
 import { FixIntervalStrategy } from '../strategies';
+
 describe('Promise Polling', () => {
     beforeAll(() => {
         setDebugMode(true);
@@ -45,5 +46,24 @@ describe('Promise Polling', () => {
         const endTime = Date.now();
         expect(endTime - startTime).toBeLessThan(500);
         expect(taskFn).toHaveBeenCalledTimes(3);
+    });
+
+    it('rejects the promise when the cancellation is requested.', async () => {
+        const taskFn = jest.fn<Promise<string>, []>();
+        taskFn.mockResolvedValue('keep-polling');
+        const abortController = new AbortController();
+        const spyAbort = jest.spyOn(abortController, 'abort');
+        const cancellationToken = new CancellationToken(abortController);
+
+        const promise = startPolling(taskFn, {
+            cancellationToken,
+            retries: 5,
+            shouldContinue: (resolvedValue) => resolvedValue !== 'done',
+            strategy: new FixIntervalStrategy(1000),
+        });
+        cancellationToken.cancel();
+        await expect(promise).rejects.toBe('cancelled');
+        expect(spyAbort).toHaveBeenCalledTimes(1);
+        expect(taskFn).toHaveBeenCalledTimes(1);
     });
 });

@@ -10,7 +10,7 @@ const debug = (message: string, ...optionalParams: any[]) => {
 	}
 };
 
-const startPolling = <RS, RJ>(taskFn: () => Promise<RS>, options: PollingOptions<RS, RJ> = {}) => {
+const startPolling = <RS, RJ>(taskFn: () => Promise<RS>, options: PollingOptions<RS, RJ> = {}): Promise<RS> => {
 	if (typeof taskFn !== 'function') {
 		throw new Error('A task function is not provided');
 	}

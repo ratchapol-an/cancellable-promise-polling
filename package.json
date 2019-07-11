@@ -1,7 +1,18 @@
 {
   "name": "cancellable-promise-polling",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A cancellable promise polling",
+  "keywords": [
+    "polling", 
+    "poll", 
+    "poller",
+    "cancel",
+    "ajax",
+    "promise",
+    "promises",
+    "abort",
+    "abortController"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

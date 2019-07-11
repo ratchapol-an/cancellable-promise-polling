@@ -1,5 +1,5 @@
 {
-  "name": "cancellable-promise-polling",
+  "name": "@agoda-com/cancellable-promise-polling",
   "version": "0.0.1",
   "description": "A cancellable promise polling",
   "main": "lib/index.js",
@@ -15,14 +15,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ratchapol-an/cancellable-promise-polling.git"
+    "url": "git+https://github.com/agoda-com/cancellable-promise-polling.git"
   },
   "author": "Ratchapol Anantawat",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ratchapol-an/cancellable-promise-polling/issues"
+    "url": "https://github.com/agoda-com/cancellable-promise-polling/issues"
   },
-  "homepage": "https://github.com/ratchapol-an/cancellable-promise-polling#readme",
+  "homepage": "https://github.com/agoda-com/cancellable-promise-polling#readme",
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.6.2",

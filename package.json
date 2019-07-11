@@ -1,5 +1,5 @@
 {
-  "name": "@agoda-com/cancellable-promise-polling",
+  "name": "cancellable-promise-polling",
   "version": "0.0.1",
   "description": "A cancellable promise polling",
   "main": "lib/index.js",

@@ -1,6 +1,7 @@
 export default class CancellationToken {
-    isCancellationRequested: boolean;
     abortController: AbortController;
-    constructor(isCancellationRequested?: boolean, abortController?: AbortController);
+    private cancellationRequested;
+    constructor(abortController?: AbortController);
     cancel(): void;
+    readonly isCancellationRequested: boolean;
 }

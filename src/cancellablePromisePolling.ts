@@ -2,7 +2,7 @@ import PollingOptions, { defaultOptions } from './PollingOptions';
 
 let pollingInstanceNo = 0;
 let debugMode = false;
-const setDebugMode = (isDebug: boolean) => debugMode = isDebug;
+const setDebugMode = (isDebug: boolean) => (debugMode = isDebug);
 const debug = (message: string, ...optionalParams: any[]) => {
 	if (debugMode) {
 		// tslint:disable-next-line: no-console
